@@ -1,0 +1,24 @@
+export default {
+    icons:{
+        mainTabHome:{
+            selected:require("./icons/main_home_sel.png"),
+            normal:require("./icons/main_home.png")
+        },
+        mainTabSearch:{
+            selected:require("./icons/main_search_sel.png"),
+            normal:require("./icons/main_search.png")
+        },
+        mainTabRewards:{
+            selected:require("./icons/main_reward_sel.png"),
+            normal:require("./icons/main_reward.png")
+        },
+        mainTabFavorites:{
+            selected:require("./icons/main_favorite_sel.png"),
+            normal:require("./icons/main_favorite.png")
+        },
+        mainTabAccount:{
+            selected:require("./icons/main_tab_account_sel.png"),
+            normal:require("./icons/main_tab_account.png")
+        },
+    }
+}
