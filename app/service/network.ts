@@ -3,7 +3,7 @@ import { parseWithDate } from "core-native/lib/util/json-util";
 import { APIException, NetworkConnectionException } from "../type/network";
 import { APIException as BaseAPIException } from "core-native";
 import ErrorCode from "../type/ErrorCode";
-import { SessionWebService } from "./api/SessionWebService";
+import { MobileSystemWebService } from "./api/MobileSystemWebService";
 import { ReplaceSessionRequest } from "./type/RequestModels";
 import { ReplaceSessionRequest$OS } from "./type/OtherModels";
 import { NetworkService } from "./NetworkService";
@@ -54,10 +54,12 @@ export async function ajax<TRequest, TResponse>(method: string, path: string, pa
             mac_address: ""
         }
         NetworkService.config.isRefreshSessionToekn = true
-        await SessionWebService.replaceSession(requestSession).then(({session_token})=>{
+        await MobileSystemWebService.replaceSession(requestSession).then(({session_token})=>{
             NetworkService.config.sessionToken = session_token
             NetworkService.config.needToRefreshSessionToekn = false
+            console.log("请求Session成功：",session_token)
         }).catch(e => {
+            console.log("请求Session异常：",e)
             throw e
         }).finally(()=>NetworkService.config.isRefreshSessionToekn = false)
     }

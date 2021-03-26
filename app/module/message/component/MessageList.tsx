@@ -5,11 +5,11 @@ import { SafeAreaView, Text } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
+import { SearchCustomerMessageResponse$Message } from "YBProject/app/service/type/api"
 import { RouteParamsList } from "../../../type/routeParams"
 import { RootState } from "../../../type/state"
 import { Navigation, ScreenNames } from "../../Navigation"
 import { actions as MessageListActions } from "../index"
-import { SearchCustomerMessageResponse$Message } from "../type"
 
 interface StateProps {
     messages: SearchCustomerMessageResponse$Message[]

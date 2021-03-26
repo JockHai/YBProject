@@ -33,6 +33,8 @@ export class NetworkService {
         if (body && Object.keys(body)) {
             sign += "\n" + encodeURIComponent(body.toString());
         }
+        console.log("body:",body)
+        console.log("hmac:",sign)
         return createHmac(sign, this.config.secret);
     }
 
@@ -56,6 +58,7 @@ export class NetworkService {
 
     static async ajax<TRequest, TResponse>(method: string, path: string, pathParams: object, request: TRequest): Promise<TResponse> {
         const fullPath = this.config.apiURL + path;
+        console.log("request",request)
         return await ajax<TRequest, TResponse>(method, fullPath, pathParams, request, path);
     }
 }
