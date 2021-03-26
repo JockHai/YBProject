@@ -225,7 +225,7 @@ func setWebServiceInfos(_ ser:[ServicesInfo]) {
                 if let requestType = $0.requestType,requestType != "void" && !importInfos.contains(requestType) {
                     importInfos += "\t" + requestType + ",\n"
                 }
-                if let method = $0.method,let name = $0.name,let path = $0.path,let requestType = $0.requestType,let responseType = $0.responseType {
+                if let method = $0.method,let name = $0.name,let path = $0.path {
                     wirteContent += "\tstatic \(name)("
                     var pathPars = ""
                     var requestPars = ""
@@ -244,14 +244,18 @@ func setWebServiceInfos(_ ser:[ServicesInfo]) {
                             requestPars = (requestPars as NSString).substring(to: requestPars.count-1) + " "//.substring(0,pathPars.count-1)
                         }
                     }
-                    if requestType != "void" {
+                    if let requestType = $0.requestType,requestType != "void" {
                         if pathPars.count > 0 {
                             pathPars += ","
                         }
                         requestInfo = "request"
                         pathPars += ("request: "+requestType)
                     }
-                    wirteContent += pathPars + "): Promise<\(responseType)> {\n"
+                    if let responseType = $0.responseType {
+                        wirteContent += pathPars + "): Promise<\(responseType)> {\n"
+                    }else{
+                        wirteContent += pathPars + "): Promise<void> {\n"
+                    }
                     wirteContent += "\t\treturn NetworkService.ajax(\"\(method.uppercased())\", \"\(path)\", {\(requestPars)}, \(requestInfo));\n\t}\n\n"
                 }
             }

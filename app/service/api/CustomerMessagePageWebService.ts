@@ -10,4 +10,8 @@ export class CustomerMessagePageWebService {
 		return NetworkService.ajax("GET", "/message-page/message", {}, request);
 	}
 
+	static deleteMessage(id: string): Promise<void> {
+		return NetworkService.ajax("DELETE", "/message-page/message/:id", { id }, null);
+	}
+
 }

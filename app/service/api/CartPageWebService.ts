@@ -18,6 +18,10 @@ export class CartPageWebService {
 		return NetworkService.ajax("GET", "/cart-page/cart", {}, request);
 	}
 
+	static clearCart(): Promise<void> {
+		return NetworkService.ajax("DELETE", "/cart-page/cart", {}, null);
+	}
+
 	static updateItemQuantity(request: UpdateCartItemRequest): Promise<UpdateCartItemResponse> {
 		return NetworkService.ajax("PUT", "/cart-page/cart/item", {}, request);
 	}

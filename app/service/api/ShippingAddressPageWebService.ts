@@ -23,4 +23,12 @@ export class ShippingAddressPageWebService {
 		return NetworkService.ajax("PUT", "/shipping-addresses-page/shipping-address/:id", { id }, request);
 	}
 
+	static deleteShippingAddress(id: string): Promise<void> {
+		return NetworkService.ajax("DELETE", "/shipping-addresses-page/shipping-address/:id", { id }, null);
+	}
+
+	static listState(): Promise<ListStateResponse> {
+		return NetworkService.ajax("GET", "/shipping-addresses-page/shipping-address/state", {}, null);
+	}
+
 }

@@ -16,6 +16,14 @@ export class AccountPageWebService {
 		return NetworkService.ajax("POST", "/account-page/customer/login", {}, request);
 	}
 
+	static logout(): Promise<void> {
+		return NetworkService.ajax("POST", "/account-page/customer/logout", {}, null);
+	}
+
+	static getProfile(): Promise<CustomerProfileView> {
+		return NetworkService.ajax("GET", "/account-page/customer/profile", {}, null);
+	}
+
 	static updateProfile(request: UpdateCustomerProfileRequest): Promise<CustomerProfileView> {
 		return NetworkService.ajax("PUT", "/account-page/customer/profile", {}, request);
 	}

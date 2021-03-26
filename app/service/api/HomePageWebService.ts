@@ -16,6 +16,10 @@ export class HomePageWebService {
 		return NetworkService.ajax("GET", "/home-page/announcement", {}, request);
 	}
 
+	static checkAppReview(): Promise<CheckAppReviewResponse> {
+		return NetworkService.ajax("PUT", "/home-page/app-review/check", {}, null);
+	}
+
 	static createEvent(request: CreateAppEventRequest): Promise<void> {
 		return NetworkService.ajax("POST", "/home-page/app-review/event", {}, request);
 	}
@@ -26,6 +30,10 @@ export class HomePageWebService {
 
 	static homeProductV2(request: HomePageRequest): Promise<HomeProductResponseV2> {
 		return NetworkService.ajax("GET", "/home-page/home-product-v2", {}, request);
+	}
+
+	static homeV2(): Promise<HomePageResponseV2> {
+		return NetworkService.ajax("GET", "/home-page/home-v2", {}, null);
 	}
 
 }
