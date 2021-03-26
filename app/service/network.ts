@@ -8,6 +8,8 @@ import { ReplaceSessionRequest } from "./type/RequestModels";
 import { ReplaceSessionRequest$OS } from "./type/OtherModels";
 import { NetworkService } from "./NetworkService";
 import config from "../config/config";
+import { Device } from "../util/Device";
+import { Platform } from "react-native";
 
 interface Request extends RequestInit {
     path: string;
@@ -41,27 +43,27 @@ export async function ajax<TRequest, TResponse>(method: string, path: string, pa
     // Replace {:param} in URL path
     if (NetworkService.config.needToRefreshSessionToekn && !NetworkService.config.isRefreshSessionToekn) {
         const requestSession: ReplaceSessionRequest = {
-            app_version: "1.1.7",
-            device_id: "233233",
-            os: ReplaceSessionRequest$OS.IOS,
-            os_version: "14.0.1",
-            cpu: "",
+            app_version: Device.version(),
+            device_id: Device.deviceId(),
+            os: Platform.OS === "android" ? ReplaceSessionRequest$OS.ANDROID : ReplaceSessionRequest$OS.IOS,
+            os_version: Device.systemVersion(),
+            cpu: Device.device() + "-" + Device.product(),
             firebase_messaging_token: "deS-YkRl-kWdn6-AoV0q69:APA91bE7ENMCaCe1ZoeKQ1dSiCz3GwAVCClLMtaKW-heZ3EOaArn2XYpoFA6ia8F5nmkT8L1uJvtYGqrusDStz5aTubA5DPA0l5RRq59OVa14uFEXFnKtgJ1-U8Jj3o6U3C-spMFluGQ",
             language: "EN",
-            manufacturer: "",
-            model_name: "",
+            manufacturer: Device.manufacture(),
+            model_name: Device.model(),
             session_token: NetworkService.config.sessionToken === "" ? null : NetworkService.config.sessionToken,
-            mac_address: ""
+            mac_address: Device.macAddress()
         }
         NetworkService.config.isRefreshSessionToekn = true
-        await MobileSystemWebService.replaceSession(requestSession).then(({session_token})=>{
+        await MobileSystemWebService.replaceSession(requestSession).then(({ session_token }) => {
             NetworkService.config.sessionToken = session_token
             NetworkService.config.needToRefreshSessionToekn = false
-            console.log("请求Session成功：",session_token)
+            console.log("请求Session成功：", session_token)
         }).catch(e => {
-            console.log("请求Session异常：",e)
+            console.log("请求Session异常：", e)
             throw e
-        }).finally(()=>NetworkService.config.isRefreshSessionToekn = false)
+        }).finally(() => NetworkService.config.isRefreshSessionToekn = false)
     }
 
     let requestURL = url(path, pathParams);
