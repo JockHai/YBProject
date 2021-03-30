@@ -1,8 +1,9 @@
+import { Device } from "../util/Device";
+
 export interface Config {
     mapboxKey: string;
     mapStyleUrl: string;
     apiHost: string;
-    apiURL: string;
     iOSAPIClientId: string;
     iOSAPISecretKey: string;
     androidAPIClientId: string;
@@ -14,7 +15,7 @@ export interface Config {
     boUrl: string;
     supportEmail: string;
     supportPhone: string;
-    env: "QA" | "UAT" | "STAG" | "PROD" | "QA-BETA" | "UAT-BETA" | "PROD-BETA";
+    env: "QA" | "PROD";
     timeout: number;
     locationLimitation?: string[];
     showEstimate: boolean;
@@ -28,14 +29,13 @@ export interface Config {
     googlePayEnv: "TEST" | "PROD";
 }
 
-export default {
-    apiURL: "https://mobile-service-v3.yummybazaar-qa.com",
+export const appConfig = {
     apiHost: "mobile-service-v3.yummybazaar-qa.com",
     iOSAPIClientId: "3f7fd58cc7c342e786d4d75eed377aeb",
     iOSAPISecretKey: "AvLZNOVvwv1T9jcXhzkYBg==",
     androidAPIClientId: "47ae34988dc842da9bfc7a40b74a9a00",
     androidAPISecretKey: "Fa/Fei7mtrDM10I2/dlY6Q==",
-    env: "QA",
+    env: Device.applicationName().search("Qa") > -1 ? "QA" : "PROD",
     timeout: 30,
-} as Config;
+} as Config
 

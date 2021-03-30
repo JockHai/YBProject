@@ -1,4 +1,4 @@
-import { call, Lifecycle, Module, register, SagaGenerator } from "core-native";
+import { call, Lifecycle, Module, register, SagaIterator } from "core-native";
 import { ShadowPropTypesIOS } from "react-native";
 import { CustomerMessagePageWebService } from "YBProject/app/service/api/CustomerMessagePageWebService";
 import { NetworkService } from "YBProject/app/service/NetworkService";
@@ -19,16 +19,15 @@ const initialState: State = {
 class MessageListModule extends Module<RootState, "messagelist"> {
 
     @Lifecycle()
-    *onEnter(): SagaGenerator {
+    *onEnter(): SagaIterator {
 
     }
 
-    *loadMessageList(pageIndex: number, pageSize: number = 20): SagaGenerator {
+    *loadMessageList(pageIndex: number, pageSize: number = 20): SagaIterator {
         try {
             Navigation.showLoading()
             const { messages,page_index,total_page } = yield* call(CustomerMessagePageWebService.searchMessage, {page_index: pageIndex,
                 page_size: pageSize})
-                
             console.log("JSON-INFO:", messages,page_index,total_page)
         } catch (e) {
             console.log("error:", e)

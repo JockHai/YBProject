@@ -1,4 +1,4 @@
-import { call, Lifecycle, Module, register, SagaGenerator } from "core-native";
+import { call, Lifecycle, Module, register, SagaIterator } from "core-native";
 import { ShadowPropTypesIOS } from "react-native";
 import { ajax } from "YBProject/app/service/network";
 import StorageUtil from "YBProject/app/util/StorageUtil";
@@ -23,15 +23,15 @@ interface getJSONR {
 class ProductDetailModule extends Module<RootState, "productdetail"> {
 
     @Lifecycle()
-    *onEnter(): SagaGenerator {
+    *onEnter(): SagaIterator {
         StorageUtil.getString("yb").then(_ => this.setState({ changeValue: _ ?? "" })).catch(_ => this.setState({ changeValue: "" }))
     }
 
-    *showUpdateDialog(): SagaGenerator {
+    *showUpdateDialog(): SagaIterator {
         console.log("123")
     }
 
-    *getJSON(): SagaGenerator {
+    *getJSON(): SagaIterator {
         try {
             Navigation.showLoading()
             const { services } = yield* call(queryPlace, {})
@@ -44,11 +44,11 @@ class ProductDetailModule extends Module<RootState, "productdetail"> {
         }
     }
 
-    *saveLocalInfo(key: string, value: string): SagaGenerator {
+    *saveLocalInfo(key: string, value: string): SagaIterator {
         StorageUtil.saveString(key, value).then(() => this.setState({ changeValue: value, addNum:this.state.addNum+1}))
     }
 
-    *delLocalInfo(key: string): SagaGenerator {
+    *delLocalInfo(key: string): SagaIterator {
         StorageUtil.remove(key).then(() => this.setState({ changeValue: "",addNum:0 }))
     }
 }

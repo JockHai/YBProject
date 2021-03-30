@@ -17,7 +17,12 @@ export class Device {
     }
 
     static device(){
+        
         return DeviceInfo.getDeviceSync();
+    }
+
+    static applicationName(){
+        return DeviceInfo.getApplicationName()
     }
 
     static product(){

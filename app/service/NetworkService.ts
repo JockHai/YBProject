@@ -39,11 +39,11 @@ export class NetworkService {
     }
 
     static async init(appConfig: Config) {
-        NetworkService.config.apiURL = appConfig.apiURL;
+        NetworkService.config.apiURL = "https://" + appConfig.apiHost;
         NetworkService.config.clientId = Platform.OS === "android" ? appConfig.androidAPIClientId : appConfig.iOSAPIClientId;
         NetworkService.config.secret = Platform.OS === "android" ? appConfig.androidAPISecretKey : appConfig.iOSAPISecretKey;
         setRequestInterceptor(async request => {
-            const signature = this.getSignature(request.method || "GET", this.config.apiURL.replace("https://", "").replace("http://", "").replace(/\:.+/, ""), request.path.replace(this.config.apiURL, ""), request.params || null, request.body || null);
+            const signature = this.getSignature(request.method || "GET", appConfig.apiHost, request.path.replace(this.config.apiURL, ""), request.params || null, request.body || null);
             request.headers = {...request.headers,[SESSION_TOKEN]:(this.config.sessionToken === "" ? "null" : this.config.sessionToken), [HMAC]: signature, [CLIENT_ID]: this.config.clientId, [DEVICE_PLATFORM]:Platform.OS,[CLIENT_VERSION]:"1.1.7"};
             console.log("header:",request.headers)
         });

@@ -1,8 +1,8 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { AppComponent } from "./main";
-import { Text, StyleSheet, Image, ImageSourcePropType,View } from "react-native"
+import { Text, StyleSheet, Image, ImageSourcePropType, View, TextStyle } from "react-native"
 import { NavigationContainer, NavigationContainerRef, Route, StackActions } from "@react-navigation/native";
 
 import ResourcesUtils from "../resources/ResourcesUtils";
@@ -10,6 +10,7 @@ import { RouteParamsList } from "../type/routeParams";
 import { LoadingMask } from "../widget/LoadingMask";
 import { ProductComponent } from "./productdetail";
 import { MessageListComponent } from "./message";
+import Toast, { ToastType } from "../widget/Toast";
 // import { SlideFromRightIOS } from "@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets";
 
 const MainTabStack = createBottomTabNavigator();
@@ -28,12 +29,12 @@ function getTabImageNode(sourceImg: ImageSourcePropType): React.ReactNode {
 function MainRouter() {
     return (
         <MainTabStack.Navigator initialRouteName="Home"
-        tabBarOptions={{showIcon:true,showLabel:true}}
+            tabBarOptions={{ showIcon: true, showLabel: true }}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused }) => {
                     if (route.name === ScreenNames.Home) {
                         return (
-                            focused ? getTabImageNode(ResourcesUtils.icons.mainTabHome.selected): getTabImageNode(ResourcesUtils.icons.mainTabHome.normal)
+                            focused ? getTabImageNode(ResourcesUtils.icons.mainTabHome.selected) : getTabImageNode(ResourcesUtils.icons.mainTabHome.normal)
                         );
                     } else if (route.name === ScreenNames.Account) {
                         return (
@@ -53,7 +54,7 @@ function MainRouter() {
     );
 }
 
-const InitialRouterContainer: React.ComponentType<any> = (routeName:string) => {
+const InitialRouterContainer: React.ComponentType<any> = (routeName: string) => {
     return (
         <MainAllStack.Navigator
             initialRouteName={routeName}
@@ -66,7 +67,7 @@ const InitialRouterContainer: React.ComponentType<any> = (routeName:string) => {
         >
             {/* <MainAllStack.Screen name="Welcome" component={AppComponent} options={{...ModalSlideFromBottomIOS, cardStyleInterpolator: forVerticalIOS, cardStyle: {backgroundColor: "transparent"}}} />
              */}
-             <MainAllStack.Screen name={ScreenNames.HomeTabs} component={MainRouter} />
+            <MainAllStack.Screen name={ScreenNames.HomeTabs} component={MainRouter} />
             <MainAllStack.Screen name={ScreenNames.ProductDetail} component={ProductComponent} />
             <MainAllStack.Screen name={ScreenNames.MessageList} component={MessageListComponent} />
         </MainAllStack.Navigator>
@@ -90,16 +91,24 @@ export interface ModalContainerProps {
 
 export class Navigation {
 
+    private static toast: Toast;   //提示框
+    private static maskCurrentWaitNum: number = 0;   //提示框
     private static mask: LoadingMask;   //等待框
     private static rootNavigator: NavigationContainerRef | null; //全局根导航
 
+    static message = (text: string, type?: ToastType, duration: number = 2000, innerTestID?: string, callback?: () => void, backgroundStyle?: any, textStyle?: TextStyle) => {
+        if (Navigation.toast) {
+            Navigation.toast.show({ text, type, duration, innerTestID, callback, backgroundStyle, textStyle });
+        }
+    };
+
     //页面切换 - 无需等待提示框
     static switchWithoutWaiting<RouteName extends keyof RouteParamsList>(name: RouteName, params?: RouteParamsList[RouteName]) {
-        Navigation.rootNavigator?.navigate({name: name as string, params});
+        Navigation.rootNavigator?.navigate({ name: name as string, params });
     }
 
     static modalV2<P extends ModalContainerProps>(ComponentType: React.ComponentType<P>, props?: Omit<P, "onDismiss">, params?: NavigationParams) {
-        Navigation.push("Modal", {...params, ComponentType, props});
+        Navigation.push("Modal", { ...params, ComponentType, props });
     }
 
     ///跳转到堆栈中最顶层的页面
@@ -155,7 +164,7 @@ export class Navigation {
             // export default function testID(id: string) {
             //     return Platform.OS === "android" ? {accessible: true, accessibilityLabel: id} : {testID: id};
             // }
-            <View style={{flex: 1}} {...{testID:""}}>
+            <View style={{ flex: 1 }} {...{ testID: "" }}>
                 <NavigationContainer
                     ref={(_: NavigationContainerRef) => {
                         Navigation.rootNavigator = _;
@@ -177,16 +186,16 @@ export class Navigation {
                         setRouteName(current?.name || "");
                     }}
                 >
-                    <InitialRouterContainer routeName={ScreenNames.HomeTabs}/>
+                    <InitialRouterContainer routeName={ScreenNames.HomeTabs} />
                 </NavigationContainer>
                 <LoadingMask ref={(_: LoadingMask) => (Navigation.mask = _)} />
-                {/* <Toast
+                <Toast
                     ref={ref => {
                         if (ref) {
                             Navigation.toast = ref;
                         }
                     }}
-                /> */}
+                />
                 {/* <BeetToast
                     ref={ref => {
                         if (ref) {
@@ -199,6 +208,8 @@ export class Navigation {
     };
 
     static showLoading = () => {
+        Navigation.maskCurrentWaitNum += 1
+        if (Navigation.maskCurrentWaitNum > 1) { return }
         if (Navigation.mask) {
             Navigation.mask.showLoading();
         }
@@ -206,11 +217,13 @@ export class Navigation {
 
     static showLoadingImmediately = () => {
         if (Navigation.mask) {
-            Navigation.mask.showLoading("233");
+            Navigation.maskCurrentWaitNum += 1
         }
     };
 
     static hideLoading = () => {
+        Navigation.maskCurrentWaitNum -= 1
+        if (Navigation.maskCurrentWaitNum > 0) { return }
         if (Navigation.mask) {
             Navigation.mask.hideLoading();
         }
@@ -221,7 +234,7 @@ const styles = StyleSheet.create({
     tabImg: {
         height: 30,
         width: 30,
-        resizeMode:"contain",
+        resizeMode: "contain",
         marginTop: 8
     },
     tabTxt: {

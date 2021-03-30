@@ -1,5 +1,5 @@
 import { startApp } from 'core-native'
-import config from './config/config'
+import { appConfig } from './config/config'
 import { ErrorHandler } from './module/ErrorHandler'
 import { AppComponent } from './module/main'
 import { Navigation } from './module/Navigation'
@@ -12,7 +12,7 @@ export function bootstrap() {
             componentType: Navigation.RootRouter,
             errorListener: new ErrorHandler(),
             beforeRendering: async () => {
-                NetworkService.init(config)
+                NetworkService.init(appConfig)
             },
         }
     )

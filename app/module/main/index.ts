@@ -1,4 +1,4 @@
-import { Module, register, SagaGenerator } from "core-native";
+import { Module, register, SagaIterator } from "core-native";
 import { RootState } from "../../type/state";
 import Main from "./component/Main";  
 import { State } from "./type";
@@ -8,7 +8,7 @@ const initialState: State = {
 };
 
 class MainModule extends Module<RootState,"main"> {
-    *showUpdateDialog():SagaGenerator {
+    *showUpdateDialog():SagaIterator {
         this.setState({
             shouldShowUpdateDialog:!this.state.shouldShowUpdateDialog
         })

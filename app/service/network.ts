@@ -7,7 +7,6 @@ import { MobileSystemWebService } from "./api/MobileSystemWebService";
 import { ReplaceSessionRequest } from "./type/RequestModels";
 import { ReplaceSessionRequest$OS } from "./type/OtherModels";
 import { NetworkService } from "./NetworkService";
-import config from "../config/config";
 import { Device } from "../util/Device";
 import { Platform } from "react-native";
 
@@ -118,6 +117,7 @@ async function doFetch(requestURL: string, requestParameters: Request, action: s
         if (response.ok) {
             // HTTP Status 200
             return responseData;
+            
         } else {
             // Try to get server errorMessage from response
             const errorMessage = responseData && responseData.message ? responseData.message : `failed to call ${requestURL}`;
