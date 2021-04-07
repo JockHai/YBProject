@@ -17,7 +17,6 @@ export class Device {
     }
 
     static device(){
-        
         return DeviceInfo.getDeviceSync();
     }
 
@@ -73,6 +72,4 @@ export class Device {
     //         return nativeVersion;
     //     }
     // }
-
-    
 }

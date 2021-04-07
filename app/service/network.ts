@@ -4,11 +4,10 @@ import { APIException, NetworkConnectionException } from "../type/network";
 import { APIException as BaseAPIException } from "core-native";
 import ErrorCode from "../type/ErrorCode";
 import { MobileSystemWebService } from "./api/MobileSystemWebService";
-import { ReplaceSessionRequest } from "./type/RequestModels";
-import { ReplaceSessionRequest$OS } from "./type/OtherModels";
 import { NetworkService } from "./NetworkService";
 import { Device } from "../util/Device";
 import { Platform } from "react-native";
+import { ReplaceSessionRequest, ReplaceSessionRequest$OS } from "./type/api";
 
 interface Request extends RequestInit {
     path: string;

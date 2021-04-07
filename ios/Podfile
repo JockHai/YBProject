@@ -81,6 +81,12 @@ target 'YBProject' do
     inherit! :complete
     # Pods for testing
   end
+  
+  target 'YBProjectQa' do
+    inherit! :complete
+    # 目标继承父级的所有行为
+    # Pods for YBProjectQa
+  end
 
   use_native_modules!
 
@@ -94,11 +100,11 @@ target 'YBProject' do
   end
 end
 
-target 'YBProject-tvOS' do
-  # Pods for YBProject-tvOS
-
-  target 'YBProject-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-end
+#target 'YBProject-tvOS' do
+#  # Pods for YBProject-tvOS
+#
+#  target 'YBProject-tvOSTests' do
+#    inherit! :search_paths
+#    # Pods for testing
+#  end
+#end

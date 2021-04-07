@@ -1,4 +1,4 @@
-import {Platform, NativeModules} from "react-native";
+import {NativeModules, Platform} from "react-native";
 
 export default class ScreenUtil {
     static get isBangsSreen(): boolean {

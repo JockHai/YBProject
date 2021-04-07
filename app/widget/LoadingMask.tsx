@@ -1,6 +1,5 @@
-import { Text } from "native-base";
 import React from "react";
-import { ActivityIndicator, StyleSheet, View, ViewStyle } from "react-native";
+import { ActivityIndicator, StyleSheet, View, ViewStyle,Text } from "react-native";
 // import {CommonStyles, StyleUtil} from "app/util";
 // import {Text} from "app/widget";
 // import testID from "app/util/TestUtil";

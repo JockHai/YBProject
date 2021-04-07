@@ -1,13 +1,15 @@
 import { StackRouterOptions } from "@react-navigation/routers"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NetworkConnectionException, uri } from "core-native"
-import { Button, Container, View } from "native-base"
+import { Container,Button } from "native-base"
 import React from "react"
-import { Dimensions, Image, SafeAreaView, Text } from "react-native"
+import { Dimensions, Image, SafeAreaView, Text, } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { connect, DispatchProp } from "react-redux"
 import { Dispatch } from "redux"
+import CommonStyles from "YBProject/app/config/CommonStyles"
 import StorageUtil from "YBProject/app/util/StorageUtil"
+import NavigationBar, { navTypes } from "YBProject/app/widget/NavigationBar"
 import ResourcesUtils from "../../../resources/ResourcesUtils"
 import { ajax } from "../../../service/network"
 import { RouteParamsList } from "../../../type/routeParams"
@@ -45,6 +47,7 @@ class ProductDetail extends React.PureComponent<Props> {
             <Container>
                 <SafeAreaProvider>
                     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff', flexDirection: "column" }}>
+                        <NavigationBar type={navTypes.HOME} style={{width:CommonStyles.width,height:44}}/>
                         <Button style={{ flexDirection: "row", margin: 8 }} onPress={() =>
                             Navigation.goBack()
                         }><Text style={{ flex: 1, textAlign: "center" }}>Back</Text></Button>

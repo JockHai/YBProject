@@ -13,12 +13,13 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		503CCB3CEA86F7104A04CD8A /* libPods-YBProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3721FD97A9DE9D7A6191602C /* libPods-YBProject.a */; };
 		84C2A7E1260DB35F0018716B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84C2A7E2260DB35F0018716B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		84C2A7E4260DB35F0018716B /* libPods-YBProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3721FD97A9DE9D7A6191602C /* libPods-YBProject.a */; };
 		84C2A7E6260DB35F0018716B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		84C2A7E7260DB35F0018716B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		9D4CD12E66DEA2FA4D901A45 /* libPods-YBProject-YBProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3222399C5E19CFC9F3A20E7C /* libPods-YBProject-YBProjectTests.a */; };
+		E80B9C4816821DE1D61A672C /* libPods-YBProject-YBProjectQa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75F85BFA6DDEEAF6FA60363D /* libPods-YBProject-YBProjectQa.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		00E356EE1AD99517003FC87E /* YBProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YBProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* YBProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YBProjectTests.m; sourceTree = "<group>"; };
+		0A726DB9BBE8C99A208FD5C1 /* Pods-YBProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject.release.xcconfig"; path = "Target Support Files/Pods-YBProject/Pods-YBProject.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* YBProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YBProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = YBProject/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = YBProject/AppDelegate.m; sourceTree = "<group>"; };
@@ -43,17 +45,19 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = YBProject/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = YBProject/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = YBProject/main.m; sourceTree = "<group>"; };
+		271D6C41BF7400799C9A1FD4 /* Pods-YBProject-YBProjectQa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject-YBProjectQa.debug.xcconfig"; path = "Target Support Files/Pods-YBProject-YBProjectQa/Pods-YBProject-YBProjectQa.debug.xcconfig"; sourceTree = "<group>"; };
 		2D42A06EC41FA48BBC53DA59 /* Pods-YBProject-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-YBProject-tvOSTests/Pods-YBProject-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		3222399C5E19CFC9F3A20E7C /* libPods-YBProject-YBProjectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YBProject-YBProjectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3721FD97A9DE9D7A6191602C /* libPods-YBProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YBProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C53FEEB4C6AC240E8EA9BDD /* libPods-YBProject-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YBProject-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		617D6246D617EADE87744597 /* Pods-YBProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject.release.xcconfig"; path = "Target Support Files/Pods-YBProject/Pods-YBProject.release.xcconfig"; sourceTree = "<group>"; };
+		5E9F35F54AEE4E4A722BA62C /* Pods-YBProject-YBProjectQa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject-YBProjectQa.release.xcconfig"; path = "Target Support Files/Pods-YBProject-YBProjectQa/Pods-YBProject-YBProjectQa.release.xcconfig"; sourceTree = "<group>"; };
 		6D84EBFA7BD81205E6AE0AC9 /* Pods-YBProject-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-YBProject-tvOSTests/Pods-YBProject-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7170F68F9641CFB55269FB87 /* Pods-YBProject-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject-tvOS.release.xcconfig"; path = "Target Support Files/Pods-YBProject-tvOS/Pods-YBProject-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		71E13596D58EAAB0C385DCF6 /* Pods-YBProject-YBProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject-YBProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-YBProject-YBProjectTests/Pods-YBProject-YBProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
+		75F85BFA6DDEEAF6FA60363D /* libPods-YBProject-YBProjectQa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YBProject-YBProjectQa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C2A7EC260DB35F0018716B /* YBProjectQa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YBProjectQa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C2A7ED260DB3600018716B /* YBProjectQaInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = YBProjectQaInfo.plist; path = /Users/admin/Desktop/react_native_project/YBProject/ios/YBProjectQaInfo.plist; sourceTree = "<absolute>"; };
-		DCFF3C96D2134D61086DD218 /* Pods-YBProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject.debug.xcconfig"; path = "Target Support Files/Pods-YBProject/Pods-YBProject.debug.xcconfig"; sourceTree = "<group>"; };
+		ABE5FF2638ECA80C82F2C945 /* Pods-YBProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject.debug.xcconfig"; path = "Target Support Files/Pods-YBProject/Pods-YBProject.debug.xcconfig"; sourceTree = "<group>"; };
 		E10F4E9FC69CA964A58A59F0 /* Pods-YBProject-YBProjectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YBProject-YBProjectTests.release.xcconfig"; path = "Target Support Files/Pods-YBProject-YBProjectTests/Pods-YBProject-YBProjectTests.release.xcconfig"; sourceTree = "<group>"; };
 		E24F85C95231486A199AC955 /* libPods-YBProject-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YBProject-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -75,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D37DE862B51A8DED5D9B34B /* libPods-YBProject.a in Frameworks */,
+				503CCB3CEA86F7104A04CD8A /* libPods-YBProject.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84C2A7E4260DB35F0018716B /* libPods-YBProject.a in Frameworks */,
+				E80B9C4816821DE1D61A672C /* libPods-YBProject-YBProjectQa.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +134,7 @@
 				3222399C5E19CFC9F3A20E7C /* libPods-YBProject-YBProjectTests.a */,
 				3C53FEEB4C6AC240E8EA9BDD /* libPods-YBProject-tvOS.a */,
 				E24F85C95231486A199AC955 /* libPods-YBProject-tvOSTests.a */,
+				75F85BFA6DDEEAF6FA60363D /* libPods-YBProject-YBProjectQa.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -169,14 +175,16 @@
 		A167D1490AE7F9C863573A43 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DCFF3C96D2134D61086DD218 /* Pods-YBProject.debug.xcconfig */,
-				617D6246D617EADE87744597 /* Pods-YBProject.release.xcconfig */,
 				71E13596D58EAAB0C385DCF6 /* Pods-YBProject-YBProjectTests.debug.xcconfig */,
 				E10F4E9FC69CA964A58A59F0 /* Pods-YBProject-YBProjectTests.release.xcconfig */,
 				FBBB83353C508861BAD0E8B6 /* Pods-YBProject-tvOS.debug.xcconfig */,
 				7170F68F9641CFB55269FB87 /* Pods-YBProject-tvOS.release.xcconfig */,
 				6D84EBFA7BD81205E6AE0AC9 /* Pods-YBProject-tvOSTests.debug.xcconfig */,
 				2D42A06EC41FA48BBC53DA59 /* Pods-YBProject-tvOSTests.release.xcconfig */,
+				ABE5FF2638ECA80C82F2C945 /* Pods-YBProject.debug.xcconfig */,
+				0A726DB9BBE8C99A208FD5C1 /* Pods-YBProject.release.xcconfig */,
+				271D6C41BF7400799C9A1FD4 /* Pods-YBProject-YBProjectQa.debug.xcconfig */,
+				5E9F35F54AEE4E4A722BA62C /* Pods-YBProject-YBProjectQa.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -227,7 +235,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84C2A7E9260DB35F0018716B /* Build configuration list for PBXNativeTarget "YBProjectQa" */;
 			buildPhases = (
-				84C2A7DE260DB35F0018716B /* [CP] Check Pods Manifest.lock */,
+				BE9ECEA10A5983BA08502AB9 /* [CP] Check Pods Manifest.lock */,
 				84C2A7DF260DB35F0018716B /* Start Packager */,
 				84C2A7E0260DB35F0018716B /* Sources */,
 				84C2A7E3260DB35F0018716B /* Frameworks */,
@@ -345,28 +353,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		84C2A7DE260DB35F0018716B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-YBProject-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		84C2A7DF260DB35F0018716B /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -416,6 +402,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-YBProject-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BE9ECEA10A5983BA08502AB9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YBProject-YBProjectQa-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -538,7 +546,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCFF3C96D2134D61086DD218 /* Pods-YBProject.debug.xcconfig */;
+			baseConfigurationReference = ABE5FF2638ECA80C82F2C945 /* Pods-YBProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -565,7 +573,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 617D6246D617EADE87744597 /* Pods-YBProject.release.xcconfig */;
+			baseConfigurationReference = 0A726DB9BBE8C99A208FD5C1 /* Pods-YBProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -699,7 +707,7 @@
 		};
 		84C2A7EA260DB35F0018716B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCFF3C96D2134D61086DD218 /* Pods-YBProject.debug.xcconfig */;
+			baseConfigurationReference = 271D6C41BF7400799C9A1FD4 /* Pods-YBProject-YBProjectQa.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconQa;
 				CLANG_ENABLE_MODULES = YES;
@@ -727,7 +735,7 @@
 		};
 		84C2A7EB260DB35F0018716B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 617D6246D617EADE87744597 /* Pods-YBProject.release.xcconfig */;
+			baseConfigurationReference = 5E9F35F54AEE4E4A722BA62C /* Pods-YBProject-YBProjectQa.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconQa;
 				CLANG_ENABLE_MODULES = YES;

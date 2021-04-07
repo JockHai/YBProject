@@ -5,6 +5,10 @@
  import AsyncStorage from "@react-native-community/async-storage";
 
  const CACHE_VERSION = 1;
+
+ export enum LocalStorageKeys {
+    USER_IS_LOGIN = "USER_IS_LOGIN"
+ }
  
  export default class StorageUtil {
      static storageKeyName(key: string): string {

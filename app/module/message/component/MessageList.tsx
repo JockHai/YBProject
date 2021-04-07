@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack"
 import { Exception, NetworkConnectionException } from "core-native"
-import { Button, Container, View } from "native-base"
+import { Container,Button } from "native-base"
 import React from "react"
 import { SafeAreaView, Text } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"

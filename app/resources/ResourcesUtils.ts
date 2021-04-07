@@ -20,5 +20,29 @@ export default {
             selected:require("./icons/main_tab_account_sel.png"),
             normal:require("./icons/main_tab_account.png")
         },
+        navBarShippingCart:require('./icons/home_icon_cart.png'),
+        navBarMessage:require('./icons/home_icon_notification.png'),
+        navBarFreebie:require('./icons/home_icon_freebies.png'),
+        navBarLogo:require('./icons/home_icon_logo.png'),
+        navBarHamburger:require('./icons/home_icon_hamburger.png'),
+        navBarBack:require('./icons/icon_back.png'),
+        mainZipcodeLocation:require("./icons/icon_zipcode_location.png"),
+        mainPointsStar:require("./icons/home_icon_star.png"),
+        reviewStar:{
+            selected:require("./icons/icon_star_sel.png"),
+            normal:require("./icons/icon_star.png")
+        },
+        productCollect:{
+            selected:require("./icons/home_icon_collect_sel.png"),
+            normal:require("./icons/home_icon_collect.png")
+        },
+        addToCart:require('./icons/icon_add_to_cart.png'),
+        newByList:require('./icons/icon_new_by_list.png'),
+        orderStateCheck:require('./icons/home_order_state_check.png'),
+        help:{
+            call:require('./icons/help_call.png'),
+            email:require('./icons/help_email.png'),
+            chat:require('./icons/help_chat.png'),
+        }
     }
 }
