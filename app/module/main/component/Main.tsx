@@ -1,13 +1,15 @@
 import { showLoading, uri } from "core-native"
 import { Container, View } from "native-base"
 import React from "react"
-import { Alert, Dimensions, Image, RefreshControl, SafeAreaView, StyleSheet, Text } from "react-native"
+import { Alert, DeviceEventEmitter, Dimensions, Image, RefreshControl, SafeAreaView, StyleSheet, Text } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { connect, DispatchProp } from "react-redux"
 import { Dispatch } from "redux"
 import CommonStyles from "YBProject/app/config/CommonStyles"
 import { HomePageResponseV2$LoggedInData, HomeProductResponseV2$LoggedInData } from "YBProject/app/service/type/api"
+import { AddToCartRequest$SourceModule } from "YBProject/app/service/type/TrackKeys"
+import { EmitterKeys } from "YBProject/app/type/EmitterKeys"
 import StyleUtil from "YBProject/app/util/StyleUtil"
 import { NavigationBar, navTypes } from "YBProject/app/widget/NavigationBar"
 import ResourcesUtils from "../../../resources/ResourcesUtils"
@@ -34,11 +36,22 @@ interface StateProps {
 interface DispatchProps {
     changeButtonValue: () => void;
     getAllData: () => void;
+    getProductAll: () => void;
 }
 
 export interface Props extends StateProps, DispatchProps { }
 
 class AppMain extends React.PureComponent<Props> {
+
+    componentDidMount() {
+        DeviceEventEmitter.addListener(EmitterKeys.FAVOURITE_CHANGED, (info) => {
+            this.props.getProductAll()
+        })
+    }
+
+    componentWillUnmount() {
+        DeviceEventEmitter.removeAllListeners()
+    }
 
     render() {
         const { shouldShowUpdateDialog, changeButtonValue, getAllData, loggedInData, isLoading, batchCheckFave, productData } = this.props;
@@ -71,29 +84,28 @@ class AppMain extends React.PureComponent<Props> {
                 <ZipCode />,
                 <Category top_navs={loggedInData?.top_navs ?? []} />,
                 <Advertisement top_banners={loggedInData?.top_banners ?? []} clickItem={(item, index) => {
-                    console.log("item:", item, "index:", index)
+                    Alert.alert("item:"+item+"index:"+index)
                 }} />,
                 <Order order={loggedInData?.last_order ? loggedInData?.last_order : null}></Order>,
                 <Reward reward_background_image_url={loggedInData?.reward_background_image_url ?? ""}
                     need_display_points_expiration_warning={loggedInData?.need_display_points_expiration_warning ?? false}
                     available_rewards={loggedInData?.available_rewards ?? 0}
                     points_expiration_warning_message={loggedInData?.points_expiration_warning_message ?? ""} />,
-                <ProductList title={"Reorder"} checkFaves={batchCheckFave?.reorder_products} products={productData?.reorder_products ? productData?.reorder_products : []}></ProductList>,
-                <ProductList title={"New Products"} checkFaves={batchCheckFave?.new_products} products={productData?.new_products ? productData?.new_products : []}></ProductList>] as Element[]).concat(static_top_banners).concat(
-                    ([<ProductList title={"Most Viewed"} action_url={loggedInData?.view_all_new_products_action_url} checkFaves={batchCheckFave?.most_viewed_products} products={productData?.most_viewed_products ? productData?.most_viewed_products : []}></ProductList>,
-                    <ProductList title={"Recently Viewed"} checkFaves={batchCheckFave?.recently_viewed_products} products={productData?.recently_viewed_products ? productData?.recently_viewed_products : []}></ProductList>])
+                <ProductList module={AddToCartRequest$SourceModule.HOME_REORDER} title={"Reorder"} checkFaves={batchCheckFave?.reorder_products} products={productData?.reorder_products ? productData?.reorder_products : []}></ProductList>,
+                <ProductList module={AddToCartRequest$SourceModule.HOME_NEW_PRODUCTS} title={"New Products"} checkFaves={batchCheckFave?.new_products} products={productData?.new_products ? productData?.new_products : []}></ProductList>] as Element[]).concat(static_top_banners).concat(
+                    ([<ProductList module={AddToCartRequest$SourceModule.HOME_MOST_VIEWED} title={"Most Viewed"} action_url={loggedInData?.view_all_new_products_action_url} checkFaves={batchCheckFave?.most_viewed_products} products={productData?.most_viewed_products ? productData?.most_viewed_products : []}></ProductList>,
+                    <ProductList module={AddToCartRequest$SourceModule.HOME_RECENTLY_VIEWED} title={"Recently Viewed"} checkFaves={batchCheckFave?.recently_viewed_products} products={productData?.recently_viewed_products ? productData?.recently_viewed_products : []}></ProductList>])
                 ).concat(static_bottom_banners).concat(
-                    <ProductList title={"Favorites"} checkFaves={batchCheckFave?.favorite_products} products={productData?.favorite_products ? productData?.favorite_products : []}></ProductList>,
+                    <ProductList module={AddToCartRequest$SourceModule.HOME_FAVORITES} title={"Favorites"} checkFaves={batchCheckFave?.favorite_products} products={productData?.favorite_products ? productData?.favorite_products : []}></ProductList>,
                     <Help></Help>
                 )
         }
-
 
         return (
             <Container>
                 <SafeAreaProvider>
                     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff', flexDirection: "column" }}>
-                        <NavigationBar type={navTypes.HOME} style={{ width: CommonStyles.width, height: 44 }} />
+                        <NavigationBar type={navTypes.HOME} style={{ zIndex:2,width: CommonStyles.width, height: 44 }} />
                         <ScrollView style={{ flex: 1, backgroundColor: "#ffffff" }} alwaysBounceVertical={true}
                             contentContainerStyle={{ justifyContent: "center", alignItems: "center" }}
                             stickyHeaderIndices={[1]}
@@ -107,7 +119,6 @@ class AppMain extends React.PureComponent<Props> {
         )
     }
 }
-
 
 const styles = StyleSheet.create({
     banner: {
@@ -131,6 +142,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     changeButtonValue: () => dispatch(MainActions.showUpdateDialog()),
     getAllData: () => dispatch(MainActions.getAllData()),
+    getProductAll: () => dispatch(MainActions.getProductAll()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppMain);

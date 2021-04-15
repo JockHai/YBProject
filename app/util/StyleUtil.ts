@@ -9,9 +9,6 @@ function scale(width: number, isFloor: boolean = false) {
     return PixelRatio.roundToNearestPixel((Dimensions.get("window").width / UI_STANDARD) * width);
 }
 
-
-
-
 const roundToNearestPixel = (layoutSize: number) => PixelRatio.roundToNearestPixel(layoutSize);
 
 export default {scale, roundToNearestPixel};

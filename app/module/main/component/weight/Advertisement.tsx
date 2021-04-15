@@ -39,7 +39,6 @@ export default class Advertisement extends React.PureComponent<Props> {
         )
     }
 
-
 }
 
 const styles = StyleSheet.create({

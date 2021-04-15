@@ -50,7 +50,7 @@ export async function ajax<TRequest, TResponse>(method: string, path: string, pa
             language: "EN",
             manufacturer: Device.manufacture(),
             model_name: Device.model(),
-            session_token: NetworkService.config.sessionToken === "" ? null : NetworkService.config.sessionToken,
+            session_token: "d3a31eea-07d4-45db-b990-933a40f0bf9d",//NetworkService.config.sessionToken === "" ? null : NetworkService.config.sessionToken,
             mac_address: Device.macAddress()
         }
         NetworkService.config.isRefreshSessionToekn = true

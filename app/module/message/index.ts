@@ -28,11 +28,9 @@ class MessageListModule extends Module<RootState, "messagelist"> {
             Navigation.showLoading()
             const { messages,page_index,total_page } = yield* call(CustomerMessagePageWebService.searchMessage, {page_index: pageIndex,
                 page_size: pageSize})
-            console.log("JSON-INFO:", messages,page_index,total_page)
         } catch (e) {
             console.log("error:", e)
         } finally {
-            console.log("finally")
             Navigation.hideLoading()
         }
     }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { AppComponent } from "./main";
+import { AccountComponent } from "./account";
 import { Text, StyleSheet, Image, ImageSourcePropType, View, TextStyle } from "react-native"
 import { NavigationContainer, NavigationContainerRef, Route, StackActions } from "@react-navigation/native";
 
@@ -11,6 +12,7 @@ import { LoadingMask } from "../widget/LoadingMask";
 import { ProductComponent } from "./productdetail";
 import { MessageListComponent } from "./message";
 import Toast, { ToastType } from "../widget/Toast";
+import { SignInComponent } from "./login";
 // import { SlideFromRightIOS } from "@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets";
 
 const MainTabStack = createBottomTabNavigator();
@@ -49,7 +51,7 @@ function MainRouter() {
             })}
         >
             <MainTabStack.Screen name={ScreenNames.Home} component={AppComponent} />
-            <MainTabStack.Screen name={ScreenNames.Account} component={AppComponent} />
+            <MainTabStack.Screen name={ScreenNames.Account} component={AccountComponent} />
         </MainTabStack.Navigator>
     );
 }
@@ -70,6 +72,7 @@ const InitialRouterContainer: React.ComponentType<any> = (routeName: string) => 
             <MainAllStack.Screen name={ScreenNames.HomeTabs} component={MainRouter} />
             <MainAllStack.Screen name={ScreenNames.ProductDetail} component={ProductComponent} />
             <MainAllStack.Screen name={ScreenNames.MessageList} component={MessageListComponent} />
+            <MainAllStack.Screen name={ScreenNames.SignInAndCreate} component={SignInComponent} />
         </MainAllStack.Navigator>
     );
 };
@@ -81,6 +84,7 @@ export enum ScreenNames {
     Account = "Account",
     ProductDetail = "ProductDetail",
     MessageList = "MessageList",
+    SignInAndCreate = "SignInAndCreate",
 }
 
 export interface ModalContainerProps {
@@ -90,7 +94,7 @@ export interface ModalContainerProps {
 }
 
 export class Navigation {
-
+    
     private static toast: Toast;   //提示框
     private static maskCurrentWaitNum: number = 0;   //提示框
     private static mask: LoadingMask;   //等待框
@@ -151,6 +155,7 @@ export class Navigation {
     static get currentRoute(): Route<string> | undefined {
         return Navigation.rootNavigator?.getCurrentRoute();
     }
+    
     static get prevRoute(): Route<string> | undefined {
         return Navigation.routes[Navigation.routes.length - 2];
     }

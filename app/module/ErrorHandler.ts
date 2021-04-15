@@ -10,7 +10,7 @@ import { Navigation } from "./Navigation";
 
 export class ErrorHandler implements ErrorListener {
     *onError(error: Exception): SagaIterator {
-        console.log("APIException---APIException--APIException")
+        console.log("ErrorHandler--APIException")
         // console.log("APIException---APIException--APIException")
         // if (error instanceof APIException) {
         //     console.log("APIException---APIException--APIException")

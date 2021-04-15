@@ -3,6 +3,7 @@ import { Image, StyleSheet, View, Text, Alert } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import CommonStyles from "YBProject/app/config/CommonStyles";
 import { BatchCheckFaveProductResponse$Product, SimpleProductView, TopNav } from "YBProject/app/service/type/api";
+import { AddFaveProductRequest$SourceModule, AddFaveProductRequest$SourcePage } from "YBProject/app/service/type/TrackKeys";
 import StyleUtil from "YBProject/app/util/StyleUtil";
 import { ProductAdditionalConfig } from "../../type";
 import Product from "./Product";
@@ -11,12 +12,13 @@ export interface Props {
     products: SimpleProductView[],
     checkFaves?: BatchCheckFaveProductResponse$Product[]|null,
     title: string,
+    module:string | null,
     action_url?: string | null,
 }
 
 export default class ProductList extends React.PureComponent<Props>{
 
-    rendItem({ item }: { item: SimpleProductView }) {
+    rendItem=({ item }:{ item: SimpleProductView }) =>{
         let pro: ProductAdditionalConfig = { isFavourite: null }
         if (this.props?.checkFaves) {
             for (const value of this.props.checkFaves) {
@@ -27,7 +29,7 @@ export default class ProductList extends React.PureComponent<Props>{
             }
         }
         return (
-            <Product onPressShoppingCart={(id) => console.log("click:", id)} style={{ width: StyleUtil.scale(160),marginLeft:StyleUtil.scale(8), height: StyleUtil.scale(305) }} product={{ ...item, ...pro }}></Product>
+            <Product source_module={this.props.module} source_page={AddFaveProductRequest$SourcePage.HOME} onPressShoppingCart={(id) => console.log("click:", id)} style={{ width: StyleUtil.scale(160),marginLeft:StyleUtil.scale(8), height: StyleUtil.scale(305) }} product={{ ...item, ...pro }}></Product>
         );
     }
 

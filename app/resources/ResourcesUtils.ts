@@ -43,6 +43,16 @@ export default {
             call:require('./icons/help_call.png'),
             email:require('./icons/help_email.png'),
             chat:require('./icons/help_chat.png'),
-        }
+        },
+        account:{
+            faq:require('./icons/account_faq.png'),
+            logOut:require('./icons/account_logout.png'),
+            messageSetting:require('./icons/account_notification.png'),
+            orderHistory:require('./icons/account_order_history.png'),
+            privacyPolicy:require('./icons/account_privacy_policy.png'),
+            shippingAddress:require('./icons/account_shipping_address.png'),
+            term:require('./icons/account_term.png'),
+        },
+        navClose:require('./icons/icon_close.png')
     }
 }

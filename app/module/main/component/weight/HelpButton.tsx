@@ -1,6 +1,6 @@
 
 
-import * as React from 'react';
+import React,{FunctionComponent} from 'react';
 import 'react-native-gesture-handler';
 import { View,StyleSheet,Text, Image, PointPropType, ShadowPropTypesIOS, ViewStyle, ImageSourcePropType } from 'react-native';
 import StyleUtil from 'YBProject/app/util/StyleUtil';
@@ -11,17 +11,17 @@ interface Props extends ViewStyle {
     subTitle:string,
 }
 
-export class HelpButton extends React.PureComponent<Props> {
-    render (){
-        return (
-            <View style={[this.props,{flexDirection:"column",alignItems:"center"}]}>
-                <Image style={btnStyles.logo} source={this.props.iconSource} />
-                <Text style={btnStyles.txtTitle}>{this.props.title}</Text>
-                <Text style={btnStyles.txtSubTitle}>{this.props.subTitle}</Text>
-            </View>
-        )
-    }
+const HelpButton:FunctionComponent<Props> = (props:Props)=>{
+    return (
+        <View style={[props,{flexDirection:"column",alignItems:"center"}]}>
+            <Image style={btnStyles.logo} source={props.iconSource} />
+            <Text style={btnStyles.txtTitle}>{props.title}</Text>
+            <Text style={btnStyles.txtSubTitle}>{props.subTitle}</Text>
+        </View>
+    ) 
 }
+
+export default HelpButton
 
 const btnStyles = StyleSheet.create({
     txtTitle: {

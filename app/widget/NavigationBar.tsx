@@ -6,6 +6,8 @@ import CommonStyles from '../config/CommonStyles';
 import ResourcesUtils from '../resources/ResourcesUtils';
 import StyleUtil from '../util/StyleUtil';
 import { RootState } from '../type/state';
+import { Navigation } from '../module/Navigation';
+import PromptConfig from '../config/PromptConfig';
 
 export enum navTypes {
     HOME = "HOME",
@@ -13,6 +15,7 @@ export enum navTypes {
     REWARD = "REWARD",
     FAVOURITE = "FAVOURITE",
     ACCOUNT = "ACCOUNT",
+    SIGN_IN = "SIGN_IN",
     PRODUCT_DETAIL = "PRODUCT_DETAIL",
     MESSAGE = "MESSAGE",
     FREEBIE = "FREEBIE",
@@ -24,7 +27,7 @@ export enum navTypes {
 }
 
 interface StateProps {
-    cartNum?: number 
+    cartNum?: number
 }
 
 interface Props extends StateProps {
@@ -52,6 +55,12 @@ export class NavigationBar extends React.Component<Props> {
                         {this.renderHome()}
                     </View>
                 )
+            case navTypes.SIGN_IN:
+                return (
+                    <View style={this.props.style}>
+                        {this.renderClose()}
+                    </View>
+                )
             // case navTypes.SEARCH:
             //     return (
             //         <View style={this.props.style}>
@@ -64,12 +73,12 @@ export class NavigationBar extends React.Component<Props> {
             //             {this.renderByTitle('REWARDS', false)}
             //         </View>
             //     )
-            // case navTypes.ACCOUNT:
-            //     return (
-            //         <View style={this.props.style}>
-            //             {this.renderByTitle('ACCOUNT', false)}
-            //         </View>
-            //     )
+            case navTypes.ACCOUNT:
+                return (
+                    <View style={this.props.style}>
+                        {this.renderByTitle(PromptConfig.account.TITLE, false)}
+                    </View>
+                )
             // case navTypes.FAVOURITE:
             //     return (
             //         <View style={this.props.style}>
@@ -190,19 +199,20 @@ export class NavigationBar extends React.Component<Props> {
     //     )
     // }
 
-    // renderByTitle(title, showBack) {
-    //     return (
-    //         <View style={[styles.content, { width: this.props.style.width, height: this.props.style.height }]}>
-    //             { showBack ?
-    //                 <TouchableOpacity onPress={() => navigationService.navigation.goBack()}>
-    //                     <Image style={styles.back} source={imgBack}></Image>
-    //                 </TouchableOpacity>
-    //                 : null}
-    //             <Text style={styles.title}>{title}</Text>
-    //             {this.renderRight({ flex: 1, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", height: 42 })}
-    //         </View>
-    //     )
-    // }
+    renderByTitle(title: string, showBack: boolean) {
+        const style = this.props.style ? this.props.style : { width: CommonStyles.width, height: 44 }
+        return (
+            <View style={[styles.content, { width: style.width, height: style.height }]}>
+                { showBack ?
+                    <TouchableOpacity onPress={() => Navigation.goBack()}>
+                        <Image style={styles.back} source={ResourcesUtils.icons.navBarBack}></Image>
+                    </TouchableOpacity>
+                    : null}
+                <Text style={styles.title}>{title}</Text>
+                {this.renderRight({ flex: 1, flexDirection: "row", justifyContent: "flex-end", alignItems: "center" })}
+            </View>
+        )
+    }
 
     // renderSearch() {
     //     return (
@@ -216,6 +226,17 @@ export class NavigationBar extends React.Component<Props> {
     //     )
     // }
 
+    renderClose() {
+        const style = this.props.style ? this.props.style : { width: CommonStyles.width, height: 44 }
+        return (
+            <View style={[styles.content, { width: style.width, height: style.height }]}>
+                <TouchableOpacity onPress={() => { Navigation.goBack() }}>
+                    <Image style={styles.search} source={ResourcesUtils.icons.navClose} />
+                </TouchableOpacity>
+            </View>
+        )
+    }
+
     renderHome() {
         const style = this.props.style ? this.props.style : { width: CommonStyles.width, height: 44 }
         return (
@@ -224,7 +245,7 @@ export class NavigationBar extends React.Component<Props> {
                     <Image style={styles.search} source={ResourcesUtils.icons.navBarHamburger} />
                 </TouchableOpacity>
                 <Image style={styles.logo} source={ResourcesUtils.icons.navBarLogo} />
-                {this.renderRight({ flex: 1, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", height: 42 })}
+                {this.renderRight({ flex: 1, flexDirection: "row", justifyContent: "flex-end", alignItems: "center" })}
             </View>
         )
     }
@@ -232,9 +253,9 @@ export class NavigationBar extends React.Component<Props> {
     renderRight(style: ViewStyle) {
         return (
             <View style={style}>
-                {this.renderRightIcon([styles.itemSize, { marginRight: StyleUtil.scale(4), marginTop: StyleUtil.scale(2) }] as ViewStyle, ResourcesUtils.icons.navBarMessage)}
-                {this.renderRightIcon([styles.itemSize, { marginRight: StyleUtil.scale(4), marginBottom: StyleUtil.scale(2) }] as ViewStyle, ResourcesUtils.icons.navBarFreebie)}
-                {this.renderRightIcon([styles.itemSize, { marginRight: StyleUtil.scale(10), marginTop: StyleUtil.scale(2) }] as ViewStyle, ResourcesUtils.icons.navBarShippingCart)}
+                {this.renderRightIcon([styles.itemSize, { marginRight: StyleUtil.scale(2) }] as ViewStyle, ResourcesUtils.icons.navBarMessage)}
+                {this.renderRightIcon([styles.itemSize, { marginRight: StyleUtil.scale(2), marginBottom: StyleUtil.scale(3), }] as ViewStyle, ResourcesUtils.icons.navBarFreebie)}
+                {this.renderRightIcon([styles.itemSize, { marginRight: StyleUtil.scale(10) }] as ViewStyle, ResourcesUtils.icons.navBarShippingCart)}
             </View>
         )
     }
@@ -251,10 +272,10 @@ export class NavigationBar extends React.Component<Props> {
                 }
             }
             }>
-                <Image style={{ width: StyleUtil.scale(40), height: StyleUtil.scale(40), resizeMode: "center", }} source={img} />
+                <Image style={{ width: StyleUtil.scale(36), height: StyleUtil.scale(36), resizeMode: "center", }} source={img} />
                 {
-                    img === ResourcesUtils.icons.navBarShippingCart ? <View style={{ borderRadius: StyleUtil.scale(8), borderColor: "#000", borderWidth: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#ffffff", minWidth: StyleUtil.scale(16), height: StyleUtil.scale(16), position: "absolute", top: StyleUtil.scale(4.5), right: StyleUtil.scale(3) }}>
-                        <Text style={{ fontSize: 8, marginLeft: 1, marginRight: 1 }}>{this.props.cartNum}9</Text>
+                    img === ResourcesUtils.icons.navBarShippingCart ? <View style={{ borderRadius: StyleUtil.scale(7), borderColor: "#000", borderWidth: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#ffffff", minWidth: StyleUtil.scale(14), height: StyleUtil.scale(16), position: "absolute", top: StyleUtil.scale(4.5), right: StyleUtil.scale(3) }}>
+                        <Text style={{ fontSize: StyleUtil.scale(8), marginLeft: 1, marginRight: 1 }}>{this.props.cartNum}9</Text>
                     </View> : null
                 }
             </TouchableOpacity>
@@ -268,12 +289,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     title: {
-        fontSize: 16,
-        left: 138,
+        fontSize: StyleUtil.scale(15),
+        left: StyleUtil.scale(44),
         position: 'absolute',
-        fontWeight: 'bold',
+        fontWeight: '500',
         textAlign: 'center',
-        width: Dimensions.get('window').width - 272
+        width: CommonStyles.width - StyleUtil.scale(88)
     },
     back: {
         marginLeft: 10,
@@ -284,12 +305,12 @@ const styles = StyleSheet.create({
     content: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: "#ffffff",
         shadowOffset: { width: 0, height: 1 },
         shadowColor: "#ccc",
         shadowRadius: 1,
         shadowOpacity: 0.5,
-        elevation: 1
+        elevation: 1,
     },
     searchBg: {
         flex: 1,
@@ -315,8 +336,6 @@ const styles = StyleSheet.create({
         width: StyleUtil.scale(152),
     },
     itemSize: {
-        height: StyleUtil.scale(40),
-        width: StyleUtil.scale(40),
         alignItems: "center",
         backgroundColor: "#fff"
     }

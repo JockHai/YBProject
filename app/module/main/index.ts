@@ -7,7 +7,9 @@ import { RootState } from "../../type/state";
 import { Navigation } from "../Navigation";
 import Main from "./component/Main";
 import { State, HomeProductListType, BatchCheckFave } from "./type";
-import {Dimensions, PixelRatio} from "react-native";
+import { DeviceEventEmitter, Dimensions, PixelRatio } from "react-native";
+import { EmitterKeys } from "YBProject/app/type/EmitterKeys";
+import { AddFaveProductRequest$SourceModule, AddFaveProductRequest$SourcePage } from "YBProject/app/service/type/TrackKeys";
 
 const initialState: State = {
     shouldShowUpdateDialog: false,
@@ -20,11 +22,10 @@ const initialState: State = {
 class MainModule extends Module<RootState, "main"> {
 
     @Lifecycle()
-    *onEnter():SagaIterator {
+    *onEnter(): SagaIterator {
         // setTimeout(()=>{
-            // yield * this.getAllData()
+        // yield * this.getAllData()
         // },1000)
-        
     }
 
     *showUpdateDialog(): SagaIterator {
@@ -45,7 +46,6 @@ class MainModule extends Module<RootState, "main"> {
         } catch (e) {
             console.log("error:", e)
         } finally {
-            console.log("finally")
             this.setState({
                 isLoading: false,
             })
@@ -57,7 +57,6 @@ class MainModule extends Module<RootState, "main"> {
             const result = yield* call(HomePageWebService.homeProductV2, { zip_code: "10001" })
             this.resetProductInfo(result)
             if (this.state.productData) {
-                console.log("6666");
                 yield* this.getFavouriteAll(this.state.productData)
             }
         } catch (e) {
@@ -88,7 +87,6 @@ class MainModule extends Module<RootState, "main"> {
                 break
         }
         if (list.length === 0) {
-            console.log("00000");
             return
         }
         let products: BatchCheckFaveProductRequest$Product[] = []
@@ -98,14 +96,9 @@ class MainModule extends Module<RootState, "main"> {
             }
         }
         if (products.length === 0) {
-            console.log("9999");
             return
         }
-        console.log("8888");
-        try {
-            const result = yield* call(CommonWebService.batchCheckFavorite, { products: products })
-            console.log("result-info-product", result.products)
-            let batchCheckFaveNew: BatchCheckFave
+        let batchCheckFaveNew: BatchCheckFave
             if (batchCheckFave) {
                 batchCheckFaveNew = {
                     ...batchCheckFave
@@ -119,6 +112,8 @@ class MainModule extends Module<RootState, "main"> {
                     reorder_products: null,
                 }
             }
+        try {
+            const result = yield* call(CommonWebService.batchCheckFavorite, { products: products })
             switch (type) {
                 case HomeProductListType.FAVORITE:
                     batchCheckFaveNew.favorite_products = result.products
@@ -142,6 +137,29 @@ class MainModule extends Module<RootState, "main"> {
                 batchCheckFave: batchCheckFaveNew
             })
         } catch (e) {
+            //操作失败处理
+            switch (type) {
+                case HomeProductListType.FAVORITE:
+                    batchCheckFaveNew.favorite_products = []
+                    break
+                case HomeProductListType.MOST_VIEW:
+                    batchCheckFaveNew.most_viewed_products = []
+                    break
+                case HomeProductListType.NEW_PRODUCT:
+                    batchCheckFaveNew.new_products = []
+                    break
+                case HomeProductListType.RECENTLY:
+                    batchCheckFaveNew.recently_viewed_products = []
+                    break
+                case HomeProductListType.REORDER:
+                    batchCheckFaveNew.reorder_products = []
+                    break
+                default:
+                    break
+            }
+            this.setState({
+                batchCheckFave: batchCheckFaveNew
+            })
             console.log("error:", e)
         }
     }
@@ -182,28 +200,55 @@ class MainModule extends Module<RootState, "main"> {
                 })
             }
         }
+        this.setState({
+            batchCheckFave:null
+        })
     }
 
-    *getFavouriteAll(data: HomeProductResponseV2$LoggedInData):SagaIterator {
-        console.log("data:",data)
-        if (NetworkService.config.customerLoggedIn === "true"){
-            if (data.favorite_products){
+    *getFavouriteAll(data: HomeProductResponseV2$LoggedInData): SagaIterator {
+        if (NetworkService.config.customerLoggedIn === "true") {
+            if (data.favorite_products) {
                 yield* this.getFavourite(HomeProductListType.FAVORITE)
             }
-            if (data.reorder_products){
+            if (data.reorder_products) {
                 yield* this.getFavourite(HomeProductListType.REORDER)
             }
         }
-        if (data.most_viewed_products){
+        if (data.most_viewed_products) {
             yield* this.getFavourite(HomeProductListType.MOST_VIEW)
         }
-        if (data.new_products){
+        if (data.new_products) {
             yield* this.getFavourite(HomeProductListType.NEW_PRODUCT)
         }
-        if (data.recently_viewed_products){
+        if (data.recently_viewed_products) {
             yield* this.getFavourite(HomeProductListType.RECENTLY)
-        }   
-        console.log("7777"); 
+        }
+    }
+
+    *addFavorite(sku: string, code: string, source_module: string|null, source_page: string): SagaIterator {
+        Navigation.showLoading()
+        try {
+            const result = yield* call(CommonWebService.addFavorite, code, sku, { source_module: source_module, source_page: source_page })
+            DeviceEventEmitter.emit(EmitterKeys.FAVOURITE_CHANGED,{ sku:sku, code:code, isFavourite:true })
+            Navigation.hideLoading()
+            yield * this.getProductAll()
+        } catch (e) {
+            Navigation.hideLoading()
+            console.log("error:", e)
+        }
+    }
+
+    *delFavorite(sku: string, code: string): SagaIterator {
+        // DeviceEventEmitter.emit(EmitterKeys.FAVOURITE_CHANGED,{ sku:sku, code:code, isFavourite:false })
+        Navigation.showLoading()
+        try {
+            const result = yield* call(CommonWebService.removeFavorite, code, sku)
+            DeviceEventEmitter.emit(EmitterKeys.FAVOURITE_CHANGED,{ sku:sku, code:code, isFavourite:false })
+            Navigation.hideLoading()
+            yield * this.getProductAll()
+        } catch (e) {
+            console.log("error:", e)
+        }
     }
 
 }

@@ -1,36 +1,90 @@
 
 import * as React from 'react';
 import 'react-native-gesture-handler';
-import { View, Image, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity, ViewStyle, DeviceEventEmitter } from 'react-native';
 import { Alert } from 'react-native';
 import StyleUtil from 'YBProject/app/util/StyleUtil';
 import { ProductStatusView, SimpleProductView } from 'YBProject/app/service/type/api';
 import StarRating from 'react-native-star-rating';
 import ResourcesUtils from 'YBProject/app/resources/ResourcesUtils';
 import { ProductAdditionalConfig } from '../../type';
+import { call, SagaIterator } from 'core-native';
+import { CommonWebService } from 'YBProject/app/service/api/CommonWebService';
+import { AddFaveProductRequest$SourceModule, AddFaveProductRequest$SourcePage } from 'YBProject/app/service/type/TrackKeys';
+import { RootState } from 'YBProject/app/type/state';
+import { Dispatch } from "redux";
+import { actions as MainActions } from "../../index"
+import { connect } from "react-redux";
+import { Navigation } from 'YBProject/app/module/Navigation';
+import { EmitterKeys } from 'YBProject/app/type/EmitterKeys';
+
+interface State {
+    isFavourite:boolean|null
+}
 
 interface Props {
     style: ViewStyle,
     product: SimpleProductView & ProductAdditionalConfig,
     onPressShoppingCart: (id: string) => void,
+    source_module: string | null,
+    source_page: string,
+    deldelFavorite: (sku: string, code: string) => void,
+    addFavorite: (sku: string, code: string, source_module: string | null, source_page: string) => void,
 }
 
-export default class Product extends React.PureComponent<Props> {
+class Product extends React.PureComponent<Props,State> {
+
+    componentDidMount() {
+        DeviceEventEmitter.addListener(EmitterKeys.FAVOURITE_CHANGED, ({ sku, code, isFavourite }) => {
+            const { product } = this.props
+            if (product.sku === sku && product.code === code) {
+                this.setState({
+                    isFavourite:isFavourite
+                })
+            }
+        })
+    }
+
+    constructor(props: Props){
+        super(props)
+        this.state = {
+            isFavourite:props.product.isFavourite
+        }
+    }
+
+    componentWillUnmount() {
+        DeviceEventEmitter.removeListener(EmitterKeys.FAVOURITE_CHANGED, () => { })
+    }
 
     render() {
-        const { style, product, onPressShoppingCart } = this.props
+        const { style, product, onPressShoppingCart, addFavorite, source_module, source_page,deldelFavorite } = this.props
         let widthParent = 0
         let heighParent = 0
         if (style) {
             widthParent = style.width ? (style.width as number) : 0
             heighParent = style.height ? style.height as number : 0
         }
+
+        let element:Element|null = null
+
+        if (this.state.isFavourite !== null){
+            element = (
+                <TouchableOpacity activeOpacity={0.8} style={styles.viewFavouriteTouch} onPress={() => {
+                    if (this.state.isFavourite){
+                        deldelFavorite(product.sku ? product.sku : "", product.code ? product.code : "")
+                    }else{
+                        addFavorite(product.sku ? product.sku : "", product.code ? product.code : "", source_module, source_page)
+                    }
+                }
+                }>
+                    <Image style={styles.viewFavourite} source={this.state.isFavourite ? ResourcesUtils.icons.productCollect.selected : ResourcesUtils.icons.productCollect.normal} ></Image>
+                </TouchableOpacity>
+            )
+        }
         return (
             <View style={{ width: widthParent, height: heighParent, marginLeft: StyleUtil.scale(8) }}>
-                <TouchableOpacity activeOpacity={1} style={[styles.viewUpTouch, { justifyContent: "center", width: widthParent, height: heighParent }]} onPress={() => Alert.alert('Sku:' + product.sku ?? "" )}>
-                    <TouchableOpacity activeOpacity={0.8} style={styles.viewFavouriteTouch} onPress={() => Alert.alert('Adding to favorite')}>
-                        <Image style={styles.viewFavourite} source={product.isFavourite ? ResourcesUtils.icons.productCollect.selected : ResourcesUtils.icons.productCollect.normal} ></Image>
-                    </TouchableOpacity>
+                <TouchableOpacity activeOpacity={1} style={[styles.viewUpTouch, { justifyContent: "center", width: widthParent, height: heighParent }]} onPress={() => Alert.alert('Sku:' + product.sku ?? "")}>
+                    {element}
                     {this.renderStatue()}
                 </TouchableOpacity>
                 <View style={[styles.viewBottom, { left: StyleUtil.scale(10), width: widthParent - StyleUtil.scale(20), height: heighParent }]}>
@@ -118,6 +172,17 @@ export default class Product extends React.PureComponent<Props> {
         }
     }
 }
+
+const mapStateToProps = (state: RootState) => {
+    return {};
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    addFavorite: (sku: string, code: string, source_module: string | null, source_page: string) => dispatch(MainActions.addFavorite(sku, code, source_module, source_page)),
+    deldelFavorite: (sku: string, code: string) => dispatch(MainActions.delFavorite(sku, code))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
 
 const styles = StyleSheet.create({
     viewUpTouch: {

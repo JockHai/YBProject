@@ -11,8 +11,7 @@ export interface Props {
 
 export default class Category extends React.PureComponent<Props>{
 
-    rendItem({ item }: { item: TopNav }) {
-        console.log(item)
+    rendItem = ({ item }: { item: TopNav }) => {
         return (
             <View style={styles.item} key={item.action_url}>
                 <Image style={styles.image} source={{uri:item.image_url ? item.image_url : "null",cache:"force-cache"}}></Image>

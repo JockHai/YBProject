@@ -17,6 +17,7 @@ const color = {
     brightWhite: "#fff",
     greenAccent: "#84AD14",
     redAccent: "#F94627",
+    YBGray:"#f8f8f8"
 };
 
 const padding = StyleUtil.scale(30);
